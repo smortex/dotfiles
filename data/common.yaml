@@ -1,0 +1,8 @@
+---
+lookup_options:
+  keyboard:
+    merge: deep
+
+keyboard:
+  options:
+    - "caps:none"

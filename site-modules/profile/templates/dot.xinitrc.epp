@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -x
+
+/usr/local/bin/xrdb .Xresources
+/usr/local/bin/urxvtd -q -o -f
+/usr/local/bin/start-pulseaudio-x11
+/usr/local/bin/nitrogen --restore
+/usr/local/bin/xset m 7 2
+/usr/local/bin/xset dpms 120 120 600
+/usr/local/bin/setxkbmap <%= lookup('keyboard.options').prefix('-option ').join(' ') %> <%= lookup('keyboard.layout') %>
+/usr/local/bin/xmodmap $HOME/.Xmodmap
+<% if lookup('touchpad') { -%>
+/usr/local/bin/xinput --set-prop '<%= lookup('touchpad') %>' 'libinput Natural Scrolling Enabled' 1
+/usr/local/bin/xinput --set-prop '<%= lookup('touchpad') %>' 'libinput Tapping Enabled' 1
+<% } -%>
+
+/usr/local/bin/xautolock &
+/usr/local/libexec/gnome-settings-daemon &
+# /usr/local/libexec/notification-daemon &
+/usr/local/bin/dunst &
+
+clock_width=200 clock_offset=15
+clock_spacing=$((2 * clock_offset))
+clock()
+{
+	if [ "$(/bin/date +%z)" = "$(/usr/bin/env TZ=$1 /bin/date +%z)" ]; then
+		/usr/bin/env TZ=$1 LC_ALL=fr_FR.ISO8859-15 /usr/local/bin/dclock -geometry ${clock_width}x80-${clock_offset}+15 &
+	else
+		date=$(echo $1 | sed -e 's|^.*/||' -e 's|_| |g')
+		/usr/bin/env TZ=$1 LC_ALL=fr_FR.ISO8859-15 /usr/local/bin/dclock -geometry ${clock_width}x80-${clock_offset}+15 -date "$date" &
+	fi
+	clock_offset=$((clock_offset + clock_width + clock_spacing))
+}
+
+clock Europe/Paris
+clock UTC
+clock America/New_York
+clock America/Los_Angeles
+clock Pacific/Tahiti
+
+pacmd update-sink-proplist 0 device.description="'Haut-parleurs intégrés'"
+pacmd update-sink-proplist 1 device.description="'Sortie casque'"
+pacmd update-sink-proplist 2 device.description="'On sait pas'"
+pacmd update-source-proplist 0 device.description="'Micro intégré'"
+pacmd update-source-proplist 2 device.description="'Entrée micro'"
+
+exec /usr/bin/ssh-agent /usr/local/bin/dbus-launch --exit-with-session /usr/local/bin/fvwm
+#exec /usr/local/bin/gpg-agent --daemon --enable-ssh-support /usr/local/bin/dbus-launch --exit-with-session /usr/local/bin/fvwm

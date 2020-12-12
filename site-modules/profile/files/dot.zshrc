@@ -1,0 +1,191 @@
+# This file is managed by Puppet
+# vim:set syntax=zsh:
+
+setopt auto_cd
+setopt interactive_comments
+setopt correct
+setopt correct_all
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+  . "/usr/local/etc/profile.d/vte.sh"
+fi
+
+CORRECT_IGNORE_FILE='.*|exe|spec|Puppetfile'
+
+autoload -Uz compinit
+compinit
+autoload zmv
+
+# We want ^W to stop on '/'
+#autoload -U select-word-style
+#select-word-style bash
+
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+# numpad:microsoft
+bindkey '^[[7~' beginning-of-line
+bindkey '^[[8~' end-of-line
+
+bindkey '^[[A' history-search-backward
+bindkey '^[[B' history-search-forward
+bindkey '^R' history-incremental-search-backward
+
+bindkey '^[[Z' expand-or-complete
+
+#bindkey -s '^[^[[B' 'cd ..\n'
+#bindkey -s '^[^[[C' 'tmux next-window\n'
+#bindkey -s '^[^[[D' 'tmux previous-window\n'
+
+# Return a number in the 0..255 range for coloring host names.
+#
+# usage:
+#   hostname_color # Use the node FQDN
+#   hostname_color www.example.com
+hostname_color()
+{
+	local hostname=$1
+	if [ -z "$hostname" ]; then
+		hostname=`hostname -f`
+	fi
+
+	local md5
+	if [ -x /sbin/md5 ]; then
+		md5=/sbin/md5
+	elif [ -x /usr/bin/md5sum ]; then
+		md5=/usr/bin/md5sum
+	fi
+
+	local fingerprint
+	fingerprint=0x$(echo $hostname | $md5 | sed 's/^.\{30\}\(..\).*$/\1/')
+
+	local n
+	n=$(($fingerprint % 231))
+
+	if [ $n = 0 -o $n = 15 -o $n = 16 ]; then
+		n=$((n+17))
+	fi
+
+	echo $n
+}
+
+# Change RXVT font using escape sequences
+#
+# usage:
+#   urxvt_change_font Inconsolata
+#   urxvt_change_font Inconsolata 12
+urxvt_change_font()
+{
+	local ft="xft:$1"
+	if [ $# -gt 1 ]; then
+		ft="${ft}:pixelsize=$2"
+	fi
+	printf '\e]710;%s\007' "${ft}"
+}
+
+HISTFILE="$HOME/.zshhistory"
+HISTSIZE=100
+SAVEHIST=100
+HIST_IGNORE_ALL_DUPS=yes
+
+# export PS1='%n@%m %~ %# '
+# export PS1='%{[36;1m%}%n@%m%{[0;34;1m%} %~ %#%{[0m%} '
+PS1='%1(j.[%j] .)%B%(#.%K{'$(hostname_color)'}%F{0}%b.%F{'$(hostname_color)'})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
+#. .zsh/git-prompt.zsh
+#PS1='%1(j.[%j] .)%B%(#.%K{'$(hostname_color)'}%F{0}%b.%F{'$(hostname_color)'})%n@%m%f%k %(?.%F{blue}.%F{red})%~%f%b $(gitprompt)%B%(?.%F{blue}.%F{red})%(?..(%F{default}%?%f%F{red}%) )%#%f%b '
+
+if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM}" ]; then
+	TERM="${TERM}-256color"
+fi
+case $TERM in
+	screen*|xterm*|rxvt*)
+		precmd() { print -Pn "\e]0;%n@%m %~ %%\a" }
+		preexec() { print -Pn "\e]0;%n@%m %~ %% ${~1:gs/\\/\\\\/:gs/%/%%}\a" }
+		;;
+esac
+
+export COLORFGBG="7;0"
+export CLICOLOR=
+export LC_ALL=fr_FR.UTF-8
+# XXX export LANG=fr_FR.UTF-8
+if which nvim 2> /dev/null >&2; then
+  export EDITOR=nvim
+else
+  export EDITOR=vim
+fi
+if which most 2> /dev/null >&2; then
+  export PAGER=most
+else
+  export PAGER=less
+fi
+
+export MANWIDTH=tty
+
+if [ -d /var/run/passenger ]; then
+  export PASSENGER_INSTANCE_REGISTRY_DIR=/var/run/passenger
+fi
+
+if [ -x /usr/bin/dircolors ]; then
+	eval `/usr/bin/dircolors`
+else
+	export LS_COLORS='di=34:ln=35:ex=31:cd=36;43:so=32'
+fi
+
+export BOLT_GEM=1
+export PDK_DISABLE_ANALYTICS=1
+
+zstyle ':completion:*' list-colors "${LS_COLORS}"
+zstyle ':completion:*' format '%{[32m%}===> %{[01m%}%d%{[0m%}'
+zstyle ':completion:*' menu select=3
+zstyle ':completion:*' completer _complete _correct
+
+alias ls='ls -F'
+alias ll='ls -lA'
+alias la='ls -a'
+
+alias httpd='ruby -run -e httpd -- --bind-address=localhost'
+alias weather='curl -H "Accept-Language: fr" wttr.in'
+alias hitifm='mplayer "http://n06.radiojar.com/u0yz7p0mb?rj-ttl=5&rj-tok=AAABcTcJUScAQeoFWbyqMcazAA"'
+
+if [ -d "${HOME}/bin" ]; then
+  PATH="${HOME}/bin:${PATH}"
+fi
+
+if [ -d "${HOME}/.gem/ruby/2.7/bin" ]; then
+  PATH="${HOME}/.gem/ruby/2.7/bin:${PATH}"
+fi
+
+if [ -d "/opt/puppetlabs/bin" ]; then
+	PATH="/opt/puppetlabs/bin:${PATH}"
+fi
+
+if [ -d "/usr/local/gcc-arm-embedded-9-2019-q4-major/bin" ]; then
+	PATH="$PATH:/usr/local/gcc-arm-embedded-9-2019-q4-major/bin"
+fi
+
+RPS1=''
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%F{178}%B-- COMMAND --%F{0}%b"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+KEYTIMEOUT=1
+
+if [ -d .password-store/.git ]; then
+  (
+    cd .password-store
+    n=$(git rev-list --count HEAD ^origin/master)
+    if [ $n -gt 0 ]; then
+      echo "[031;1m===> $n commit(s) in local passwords database not pushed to remote repository![0m"
+    fi
+  )
+fi
+
+# For some reason, PWD=/ on GNOME
+if [ $PWD = "/" -a -n "$HOME" ]; then
+  cd
+fi
+
+:

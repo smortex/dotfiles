@@ -1,0 +1,6 @@
+---
+keyboard:
+  layout: "us"
+  options:
+    - "compose:ralt"
+touchpad: "ETPS/2 Elantech Touchpad"
