@@ -1,0 +1,15 @@
+# Avoid <ESC> being delayed in vim
+set -s escape-time 0
+
+# mess with the status window
+set -g status-bg colour<%= hostname_color() %>
+set -g status-right "[#T]"
+<% if versioncmp($profile::tmux::version, '3.0') >= 0 { -%>
+set-window-option -g window-status-current-style bg=black,fg=colour<%= hostname_color() %>
+<% } else { -%>
+setw -g window-status-current-fg colour<%= hostname_color() %>
+setw -g window-status-current-bg black
+<% } -%>
+
+bind-key -n M-Left previous-window
+bind-key -n M-Right next-window
