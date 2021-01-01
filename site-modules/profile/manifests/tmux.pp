@@ -1,5 +1,5 @@
 class profile::tmux {
-  $version = '2.8'
+  $version = fact('tmux_version')
 
   file { "${fact('home')}/.tmux.conf":
     ensure  => file,
