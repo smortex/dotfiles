@@ -36,38 +36,6 @@ bindkey '^[[Z' expand-or-complete
 #bindkey -s '^[^[[C' 'tmux next-window\n'
 #bindkey -s '^[^[[D' 'tmux previous-window\n'
 
-# Return a number in the 0..255 range for coloring host names.
-#
-# usage:
-#   hostname_color # Use the node FQDN
-#   hostname_color www.example.com
-hostname_color()
-{
-	local hostname=$1
-	if [ -z "$hostname" ]; then
-		hostname=`hostname -f`
-	fi
-
-	local md5
-	if [ -x /sbin/md5 ]; then
-		md5=/sbin/md5
-	elif [ -x /usr/bin/md5sum ]; then
-		md5=/usr/bin/md5sum
-	fi
-
-	local fingerprint
-	fingerprint=0x$(echo $hostname | $md5 | sed 's/^.\{30\}\(..\).*$/\1/')
-
-	local n
-	n=$(($fingerprint % 231))
-
-	if [ $n = 0 -o $n = 15 -o $n = 16 ]; then
-		n=$((n+17))
-	fi
-
-	echo $n
-}
-
 # Change RXVT font using escape sequences
 #
 # usage:
@@ -87,11 +55,7 @@ HISTSIZE=100
 SAVEHIST=100
 HIST_IGNORE_ALL_DUPS=yes
 
-# export PS1='%n@%m %~ %# '
-# export PS1='%{[36;1m%}%n@%m%{[0;34;1m%} %~ %#%{[0m%} '
-PS1='%1(j.[%j] .)%B%(#.%K{'$(hostname_color)'}%F{0}%b.%F{'$(hostname_color)'})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
-#. .zsh/git-prompt.zsh
-#PS1='%1(j.[%j] .)%B%(#.%K{'$(hostname_color)'}%F{0}%b.%F{'$(hostname_color)'})%n@%m%f%k %(?.%F{blue}.%F{red})%~%f%b $(gitprompt)%B%(?.%F{blue}.%F{red})%(?..(%F{default}%?%f%F{red}%) )%#%f%b '
+PS1='%1(j.[%j] .)%B%(#.%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{0}%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
 
 if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM}" ]; then
 	TERM="${TERM}-256color"
