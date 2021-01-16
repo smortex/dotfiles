@@ -1,0 +1,7 @@
+# Managed by dotfiles
+#
+# ALL CHANGES WILL BE LOST!
+
+text/html; lynx -display_charset=utf8 -dump %s; nametemplate=%s.html; copiousoutput
+
+# vim:set ft=mailcap:
