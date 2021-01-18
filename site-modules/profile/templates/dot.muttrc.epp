@@ -23,4 +23,8 @@ color status default color<%= $facts.get('networking.fqdn').skittle_color %>
 
 set index_format="%4C %Z %[!%b %d] %-20.20F %4c %s"
 
+folder-hook . set sort=threads
+folder-hook . set sort_aux=date
+folder-hook "sent" set sort=date
+
 # vim:set ft=muttrc:
