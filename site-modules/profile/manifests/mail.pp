@@ -4,7 +4,7 @@ class profile::mail (
   Optional[String] $imap_url = undef,
   Optional[String] $imap_user = undef,
   Optional[Sensitive] $imap_pass = undef,
-  Optional[String] $spoolfile = undef,
+  String $spoolfile = '+INBOX',
   Optional[String] $record = undef,
   Optional[String] $postponed = undef,
   Optional[String] $smtp_url = undef,

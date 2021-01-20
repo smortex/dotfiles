@@ -6,6 +6,7 @@ alternates <%= $alternate %>
 
 <% if $profile::mail::imap_url { -%>
 set folder = <%= String($profile::mail::imap_url, '%p') %>
+set spoolfile = <%= String($profile::mail::spoolfile, '%p') %>
   <%- if $profile::mail::imap_user { -%>
 set imap_user = <%= String($profile::mail::imap_user, '%p') %>
   <%- } -%>
@@ -14,15 +15,12 @@ set imap_pass = <%= String($profile::mail::imap_pass.unwrap, '%p') %>
   <%- } -%>
 <% } -%>
 
-<%- if $profile::mail::spoolfile { -%>
-set spoolfile = <%= String($profile::mail::spoolfile, '%p') %>
-<%- } -%>
-<%- if $profile::mail::record { -%>
+<% if $profile::mail::record { -%>
 set record = <%= String($profile::mail::record, '%p') %>
-<%- } -%>
-<%- if $profile::mail::postponed { -%>
+<% } -%>
+<% if $profile::mail::postponed { -%>
 set postponed = <%= String($profile::mail::postponed, '%p') %>
-<%- } -%>
+<% } -%>
 
 <% if $profile::mail::smtp_url { -%>
 set smtp_url = <%= String($profile::mail::smtp_url, '%p') %>
