@@ -102,7 +102,11 @@ zstyle ':completion:*' format '%{[32m%}===> %{[01m%}%d%{[0m%}'
 zstyle ':completion:*' menu select=3
 zstyle ':completion:*' completer _complete _correct
 
+<% if fact('kernel') == 'linux' { -%>
+alias ls='ls --classify --color --literal'
+<% } else { -%>
 alias ls='ls -F'
+<% } -%>
 alias ll='ls -lA'
 alias la='ls -a'
 
