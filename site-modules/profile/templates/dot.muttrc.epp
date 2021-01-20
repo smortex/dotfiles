@@ -51,6 +51,10 @@ set include = yes
 set include_onlyfirst = yes
 set header_cache = "<%= $facts.get('home') %>/.mutt/cache"
 
+<% $profile::mail::subscribes.each |$subscribe| { -%>
+subscribe <%= $subscribe %>
+<% } -%>
+
 my_hdr X-PGP-Key: http://romain.blogreen.org/pubkey.asc
 
 color status default color<%= $facts.get('networking.fqdn').skittle_color %>
