@@ -15,6 +15,15 @@ set mime_forward
 set keep_flagged=yes
 set pager_index_lines=6
 
+set pager_stop
+set tilde
+set ssl_force_tls = yes
+set edit_headers = yes
+set fast_reply = yes
+set include = yes
+set include_onlyfirst = yes
+set header_cache = "<%= $facts.get('home') %>/.mutt/cache"
+
 my_hdr X-PGP-Key: http://romain.blogreen.org/pubkey.asc
 
 set imap_user = romain
