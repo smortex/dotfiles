@@ -1,5 +1,13 @@
 class profile::mail (
   Array[String[1]] $alternates = [],
+  Optional[String] $imap_url = undef,
+  Optional[String] $imap_user = undef,
+  Optional[Sensitive] $imap_pass = undef,
+  Optional[String] $spoolfile = undef,
+  Optional[String] $record = undef,
+  Optional[String] $postponed = undef,
+  Optional[String] $smtp_url = undef,
+  Optional[Sensitive] $smtp_pass = undef,
 ) {
   file { "${fact('home')}/.mailcap":
     ensure => file,
@@ -16,6 +24,9 @@ class profile::mail (
   file { "${fact('home')}/.signature":
     ensure => file,
     mode   => '0644',
-    source => 'puppet:///modules/profile/mail/dot.signature',
+    source => [
+      "puppet:///modules/profile/mail/dot.signature.${facts['customer']}",
+      'puppet:///modules/profile/mail/dot.signature',
+    ]
   }
 }

@@ -1,5 +1,9 @@
 ---
 lookup_options:
+  "profile::mail::imap_pass":
+    convert_to: "Sensitive"
+  "profile::mail::smtp_pass":
+    convert_to: "Sensitive"
   keyboard:
     merge: deep
 

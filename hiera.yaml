@@ -6,5 +6,7 @@ defaults:
 hierarchy:
   - name: "Per-node data (yaml version)"
     path: "nodes/%{networking.fqdn}.yaml"
+  - name: "Per-customer data (yaml version)"
+    path: "customers/%{customer}.yaml"
   - name: "Common data"
     path: "common.yaml"
