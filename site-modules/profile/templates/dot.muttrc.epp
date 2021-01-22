@@ -55,7 +55,22 @@ subscribe <%= $subscribe %>
 
 my_hdr X-PGP-Key: http://romain.blogreen.org/pubkey.asc
 
-color status default color<%= $facts.get('networking.fqdn').skittle_color %>
+color normal     default       default
+color status     default       color<%= $facts.get('networking.fqdn').skittle_color %>
+color error      brightred     default
+color tree       brightmagenta default
+color index      brightgreen   default "~N"
+color index      brightred     default "~F"
+color index      brightyellow  default "~P"
+color header     brightwhite   default "^date:"
+color header     brightgreen   default "^from:"
+color header     brightwhite   default "^to:"
+color header     brightblue    default "^cc:"
+color header     brightyellow  default "^subject:"
+color tilde      blue          default
+color attachment brightyellow  default
+color quoted     green         default
+color signature  brightred     default
 
 bind pager <up>   previous-line
 bind pager <down> next-line
