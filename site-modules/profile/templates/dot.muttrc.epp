@@ -1,6 +1,6 @@
 # Managed by dotfiles
 
-set hostname=<%= $profile::mail::hostname %>
+set hostname = <%= $profile::mail::hostname %>
 
 <% $profile::mail::alternates.each |$alternate| { -%>
 alternates <%= $alternate %>
@@ -31,16 +31,16 @@ set smtp_pass = <%= String($profile::mail::smtp_pass.unwrap, '%p') %>
   <%- } -%>
 <% } -%>
 
-set signature=~/.signature
+set signature = ~/.signature
 
-set ignore_list_reply_to=yes
-set check_mbox_size=no
-set imap_list_subscribed=yes
+set ignore_list_reply_to = yes
+set check_mbox_size = no
+set imap_list_subscribed = yes
 
 set strict_threads
 set mime_forward
-set keep_flagged=yes
-set pager_index_lines=6
+set keep_flagged = yes
+set pager_index_lines = 6
 
 set pager_stop
 set tilde
@@ -77,11 +77,11 @@ color signature  brightred     default
 bind pager <up>   previous-line
 bind pager <down> next-line
 
-set index_format="%4C %Z %[!%b %d] %-20.20F %4c %s"
+set index_format = "%4C %Z %[!%b %d] %-20.20F %4c %s"
 
-folder-hook . set sort=threads
-folder-hook . set sort_aux=last-date-received
-folder-hook "sent" set sort=date
+folder-hook . set sort = threads
+folder-hook . set sort_aux = last-date-received
+folder-hook "sent" set sort = date
 
 auto_view text/html
 alternative_order text/plain text/html
