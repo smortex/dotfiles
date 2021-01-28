@@ -64,6 +64,7 @@ color tree       brightmagenta default
 color index      brightgreen   default "~N"
 color index      brightred     default "~F"
 color index      brightyellow  default "~P"
+color header     cyan          default "^User-Agent"
 color header     brightwhite   default "^Date:"
 color header     brightgreen   default "^From:"
 color header     brightwhite   default "^To:"
