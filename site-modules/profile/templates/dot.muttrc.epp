@@ -1,5 +1,7 @@
 # Managed by dotfiles
 
+set hostname=<%= $profile::mail::hostname %>
+
 <% $profile::mail::alternates.each |$alternate| { -%>
 alternates <%= $alternate %>
 <% } -%>

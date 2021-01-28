@@ -1,4 +1,5 @@
 class profile::mail (
+  String[1] $hostname,
   Array[String[1]] $alternates = [],
   Array[String[1]] $subscribes = [],
   Optional[String] $imap_url = undef,
