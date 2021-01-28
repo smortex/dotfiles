@@ -64,11 +64,11 @@ color tree       brightmagenta default
 color index      brightgreen   default "~N"
 color index      brightred     default "~F"
 color index      brightyellow  default "~P"
-color header     brightwhite   default "^date:"
-color header     brightgreen   default "^from:"
-color header     brightwhite   default "^to:"
-color header     brightblue    default "^cc:"
-color header     brightyellow  default "^subject:"
+color header     brightwhite   default "^Date:"
+color header     brightgreen   default "^From:"
+color header     brightwhite   default "^To:"
+color header     brightblue    default "^Cc:"
+color header     brightyellow  default "^Subject:"
 color tilde      blue          default
 color attachment brightyellow  default
 color quoted     green         default
