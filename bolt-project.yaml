@@ -3,6 +3,3 @@ name: "dotfiles"
 apply-settings:
   show_diff: true
 hiera-config: "hiera.yaml"
-modulepath:
-  - "modules"
-  - "site-modules"
