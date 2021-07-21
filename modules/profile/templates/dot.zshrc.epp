@@ -3,14 +3,10 @@
 
 setopt auto_cd
 setopt interactive_comments
-setopt correct
-setopt correct_all
 
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
   . "/usr/local/etc/profile.d/vte.sh"
 fi
-
-CORRECT_IGNORE_FILE='.*|exe|spec|Puppetfile'
 
 autoload -Uz compinit
 compinit
