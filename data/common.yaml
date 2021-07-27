@@ -10,3 +10,16 @@ lookup_options:
 keyboard:
   options:
     - "caps:none"
+profile::git::default_settings:
+  user:
+    name: "Romain Tartière"
+  init:
+    defaultBranch: "main"
+  pull:
+    ff: "only"
+profile::git::include_settings:
+  freebsd:
+    path: "~/FreeBSD/"
+    settings:
+      user:
+        email: "romain@FreeBSD.org"
