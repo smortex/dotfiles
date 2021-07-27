@@ -3,3 +3,5 @@ name: "dotfiles"
 apply-settings:
   show_diff: true
 hiera-config: "hiera.yaml"
+modules:
+  - puppetlabs/inifile
