@@ -11,6 +11,10 @@ keyboard:
   options:
     - "caps:none"
 profile::git::default_settings:
+  commit:
+    gpgSign: "true"
+  tag:
+    gpgSign: "true"
   user:
     name: "Romain Tartière"
   init:

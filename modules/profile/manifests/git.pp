@@ -5,9 +5,10 @@ class profile::git (
 ) {
   $default_settings.each |$section, $settings| {
     $settings.each |$setting, $value| {
-      gitconfig { $setting:
+      gitconfig { "gitconfig-${section}-${setting}":
         ensure  => present,
         section => $section,
+        setting => $setting,
         value   => $value,
         path    => "${fact('home')}/.gitconfig",
       }
@@ -25,7 +26,7 @@ class profile::git (
 
     $config['settings'].each |$section, $settings| {
       $settings.each |$setting, $value| {
-        gitconfig { "gitconfig-${fragment}-${setting}":
+        gitconfig { "gitconfig-${fragment}-${section}-${setting}":
           ensure  => present,
           section => $section,
           setting => $setting,
