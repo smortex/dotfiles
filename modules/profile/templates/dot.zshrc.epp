@@ -79,6 +79,7 @@ else
 fi
 
 export MANWIDTH=tty
+export GPG_TTY=$(tty)
 
 if [ -d /var/run/passenger ]; then
   export PASSENGER_INSTANCE_REGISTRY_DIR=/var/run/passenger
