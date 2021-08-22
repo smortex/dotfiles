@@ -1,5 +1,5 @@
 # This file is managed by Puppet
-# vim:set syntax=zsh:
+# epp_subtype=zsh
 
 setopt auto_cd
 setopt interactive_comments

@@ -1,4 +1,5 @@
 # Managed by dotfiles
+# epp_subtype=muttrc
 
 set hostname = <%= $profile::mail::hostname %>
 

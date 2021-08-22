@@ -1,3 +1,5 @@
+<%-| # epp_subtype=tmux
+|-%>
 # Avoid <ESC> being delayed in vim
 set -s escape-time 0
 
