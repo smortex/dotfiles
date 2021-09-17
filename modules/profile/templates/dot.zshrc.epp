@@ -1,5 +1,5 @@
 # This file is managed by Puppet
-# epp_subtype=zsh
+<%# epp_subtype=zsh -%>
 
 setopt auto_cd
 setopt interactive_comments
@@ -12,6 +12,8 @@ autoload -Uz compinit
 compinit
 autoload zmv
 
+bindkey -v
+
 # We want ^W to stop on '/'
 #autoload -U select-word-style
 #select-word-style bash
@@ -21,6 +23,9 @@ bindkey '^[[F' end-of-line
 # numpad:microsoft
 bindkey '^[[7~' beginning-of-line
 bindkey '^[[8~' end-of-line
+# tmux
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
 
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
@@ -51,7 +56,7 @@ HISTSIZE=100
 SAVEHIST=100
 HIST_IGNORE_ALL_DUPS=yes
 
-PS1='%1(j.[%j] .)%B%(#.%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{0}%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
+PS1='%1(j.[%j] .)%B%(#.%K{<%= $facts.get('networking.fqdn').skittle_color %>}%f%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
 
 if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM}" ]; then
 	TERM="${TERM}-256color"
@@ -95,7 +100,7 @@ export BOLT_GEM=1
 export PDK_DISABLE_ANALYTICS=1
 
 zstyle ':completion:*' list-colors "${LS_COLORS}"
-zstyle ':completion:*' format '%{[32m%}===> %{[01m%}%d%{[0m%}'
+zstyle ':completion:*' format '%F{2}===> %B%d%f%b'
 zstyle ':completion:*' menu select=3
 zstyle ':completion:*' completer _complete _correct
 zstyle ':completion:*:hosts' known-hosts-files /etc/ssh/*_known_hosts ~/.ssh/known_hosts
@@ -130,7 +135,7 @@ fi
 
 RPS1=''
 function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%F{178}%B-- COMMAND --%F{0}%b"
+    VIM_PROMPT="%F{178}%B-- COMMAND --%f%b"
     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}"
     zle reset-prompt
 }
@@ -144,14 +149,9 @@ if [ -d .password-store/.git ]; then
     cd .password-store
     n=$(git rev-list --count HEAD ^origin/master)
     if [ $n -gt 0 ]; then
-      echo "[031;1m===> $n commit(s) in local passwords database not pushed to remote repository![0m"
+      echo "\033[31;1m===> $n commit(s) in local passwords database not pushed to remote repository!\033[0m"
     fi
   )
-fi
-
-# For some reason, PWD=/ on GNOME
-if [ $PWD = "/" -a -n "$HOME" ]; then
-  cd
 fi
 
 if [ -f "$HOME/.zshrc.local" ]; then
