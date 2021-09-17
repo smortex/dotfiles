@@ -1,7 +1,12 @@
 ---
-name: "dotfiles"
+name: dotfiles
 apply-settings:
   show_diff: true
-hiera-config: "hiera.yaml"
+hiera-config: hiera.yaml
 modules:
-  - puppetlabs/inifile
+- puppetlabs-facts
+- puppetlabs-inifile
+- puppetlabs-puppet_agent
+- puppetlabs-stdlib
+- puppetlabs/apply_helpers
+- puppetlabs/ruby_task_helper
