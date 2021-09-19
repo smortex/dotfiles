@@ -1,0 +1,1 @@
+color status black color<%= $facts.get('networking.fqdn').skittle_color %>
