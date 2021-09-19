@@ -144,7 +144,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 KEYTIMEOUT=1
 
-<% if fact('pass_version') { -%>
+<% if fact('pass_path') { -%>
 if [ -d .password-store/.git ]; then
   (
     cd .password-store
