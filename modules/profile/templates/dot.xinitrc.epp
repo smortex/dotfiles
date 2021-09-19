@@ -1,5 +1,5 @@
 #!/bin/sh
-# epp_subtype=sh
+<%# epp_subtype=sh -%>
 
 set -x
 
