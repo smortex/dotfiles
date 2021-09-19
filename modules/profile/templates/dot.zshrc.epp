@@ -144,6 +144,7 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 KEYTIMEOUT=1
 
+<% if fact('pass_version') { -%>
 if [ -d .password-store/.git ]; then
   (
     cd .password-store
@@ -154,6 +155,7 @@ if [ -d .password-store/.git ]; then
   )
 fi
 
+<% } -%>
 if [ -f "$HOME/.zshrc.local" ]; then
   . "$HOME/.zshrc.local"
 fi
