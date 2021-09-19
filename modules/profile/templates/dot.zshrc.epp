@@ -72,16 +72,16 @@ export COLORFGBG="7;0"
 export CLICOLOR=
 export LC_ALL=fr_FR.UTF-8
 # XXX export LANG=fr_FR.UTF-8
-if which nvim 2> /dev/null >&2; then
-  export EDITOR=nvim
-else
-  export EDITOR=vim
-fi
-if which most 2> /dev/null >&2; then
-  export MANPAGER=most
-else
-  export MANPAGER=less
-fi
+<% if fact('nvim_path') { -%>
+export EDITOR=nvim
+<% } else { -%>
+export EDITOR=vim
+<% } -%>
+<% if fact('most_path') { -%>
+export MANPAGER=most
+<% } else { -%>
+export MANPAGER=less
+<% } -%>
 
 export MANWIDTH=tty
 export GPG_TTY=$(tty)
