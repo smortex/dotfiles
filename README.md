@@ -18,6 +18,8 @@ I do not feel these files belong to a [control-repo](https://github.com/puppetla
 
 ## How?
 
+Puppet must be usable on systems where configuration has to be managed.  It does not need to be installed system-wide, a user install of Puppet is enough if the PATH allows to find it (but a [patch is currently needed](https://github.com/puppetlabs/puppetlabs-puppet_agent/pull/581)).
+
 For now, there are only profiles in the project, they are applied using `bolt apply`:
 
 ```
