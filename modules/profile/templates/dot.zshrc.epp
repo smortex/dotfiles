@@ -56,7 +56,7 @@ HISTSIZE=100
 SAVEHIST=100
 HIST_IGNORE_ALL_DUPS=yes
 
-PS1='%1(j.[%j] .)%B%(#.%K{<%= $facts.get('networking.fqdn').skittle_color %>}%f%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
+PS1='%1(j.[%j] .)%B%(#.%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{black}%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
 
 if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM}" ]; then
 	TERM="${TERM}-256color"
