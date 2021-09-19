@@ -21,5 +21,5 @@ I do not feel these files belong to a [control-repo](https://github.com/puppetla
 For now, there are only profiles in the project, they are applied using `bolt apply`:
 
 ```
-bolt apply -e 'include profile::foo' -r target.example.com
+bolt apply -e 'include profile::foo' -t target.example.com
 ```
