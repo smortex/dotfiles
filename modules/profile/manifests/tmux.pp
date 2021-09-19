@@ -3,7 +3,7 @@ class profile::tmux {
 
   file { "${fact('home')}/.tmux.conf":
     ensure  => file,
-    owner   => '0644',
+    mode    => '0644',
     content => epp('profile/dot.tmux.conf'),
   }
 }
