@@ -16,6 +16,14 @@ I do not feel these files belong to a [control-repo](https://github.com/puppetla
 * Their life-cycle is disconnected from these organizations;
 * These configuration will end-up on nodes which might not be managed by Puppet.
 
+## Requirements
+
+Bolt must have access to the `skittlize` gem.  Install it as usual, but if using AIO package, use the version of `gem(1)` bundled with Bolt.
+
+```
+/opt/puppetlabs/bolt/bin/gem install skittlize
+```
+
 ## How?
 
 Puppet must be usable on systems where configuration has to be managed.  It does not need to be installed system-wide, a user install of Puppet is enough if the PATH allows to find it (but a [patch is currently needed](https://github.com/puppetlabs/puppetlabs-puppet_agent/pull/581)).
