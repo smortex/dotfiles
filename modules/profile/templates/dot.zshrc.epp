@@ -4,7 +4,7 @@
 setopt auto_cd
 setopt interactive_comments
 
-if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+if [ -r "/usr/local/etc/profile.d/vte.sh" -a '(' -n "${TILIX_ID}" -o -n "${VTE_VERSION}" ')' ]; then
   . "/usr/local/etc/profile.d/vte.sh"
 fi
 
