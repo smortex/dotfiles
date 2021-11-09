@@ -13,7 +13,8 @@ class profile::nvim {
   }
 
   file { "${fact('home')}/.config/nvim/autoload/plug.vim":
-    ensure => file,
-    source => 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
+    ensure  => file,
+    replace => false,
+    source  => 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim',
   }
 }
