@@ -6,6 +6,10 @@ class profile::gnupg (
     mode   => '0700',
   }
 
+  file { "${fact('home')}/.gnupg/gpg.conf":
+    ensure => file,
+  }
+
   file_line { 'gpg.conf-default_key':
     line  => "default-key ${default_key}",
     match => '^default-key ',
