@@ -5,7 +5,7 @@ class profile::ruby {
 
   file { "${fact('home')}/.bundle/config":
     ensure => file,
-    content => @(CONFIG),
+    content => @("CONFIG"),
       ---
       BUNDLE_PATH: "${fact('home')}/.bundle/vendor"
       BUNDLE_JOBS: "4"
