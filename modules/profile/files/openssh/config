@@ -1,2 +1,5 @@
 AddKeysToAgent yes
+CheckHostIP no
+SendEnv LANG LC_* TZ
+ServerAliveInterval 60
 VisualHostKey yes
