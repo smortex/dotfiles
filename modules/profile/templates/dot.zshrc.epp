@@ -121,8 +121,9 @@ if [ -d "${HOME}/bin" ]; then
   PATH="${HOME}/bin:${PATH}"
 fi
 
-if [ -d "${HOME}/.gem/ruby/2.7/bin" ]; then
-  PATH="${HOME}/.gem/ruby/2.7/bin:${PATH}"
+if [ -d "${HOME}/.gem/ruby" ]; then
+  ruby_path=$(\ls -drt "${HOME}/.gem/ruby"/*/bin | tail -n 1)
+  PATH="${ruby_path}:${PATH}"
 fi
 
 if [ -d "/opt/puppetlabs/bin" ]; then
