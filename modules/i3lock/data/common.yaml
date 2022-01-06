@@ -1,0 +1,3 @@
+---
+i3lock::command: /usr/bin/i3lock
+i3lock::package: i3lock

@@ -1,0 +1,3 @@
+---
+xautolock::command: /usr/bin/xautolock
+xautolock::package: xautolock

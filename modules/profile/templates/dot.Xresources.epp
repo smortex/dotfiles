@@ -1,0 +1,4 @@
+Xautolock.time: 300
+Xautolock.locker: <%= $i3lock::command %>
+Xautolock.notify: 30
+Xautolock.notifier: <%= $notify_send::command %>
