@@ -117,22 +117,22 @@ alias httpd='ruby -run -e httpd -- --bind-address=localhost'
 alias weather='curl -H "Accept-Language: fr" wttr.in'
 alias hitifm='mplayer "http://n06.radiojar.com/u0yz7p0mb?rj-ttl=5&rj-tok=AAABcTcJUScAQeoFWbyqMcazAA"'
 
-if [ -d "${HOME}/bin" ]; then
-  PATH="${HOME}/bin:${PATH}"
-fi
+add_to_path()
+{
+  if [ -d "$1" ] && ! echo ":$PATH:" | grep -q ":$1:"; then
+    PATH="$1:${PATH}"
+  fi
+}
+
+add_to_path "${HOME}/bin"
 
 if [ -d "${HOME}/.gem/ruby" ]; then
   ruby_path=$(\ls -drt "${HOME}/.gem/ruby"/*/bin | tail -n 1)
-  PATH="${ruby_path}:${PATH}"
+  add_to_path "${ruby_path}"
 fi
 
-if [ -d "/opt/puppetlabs/bin" ]; then
-	PATH="/opt/puppetlabs/bin:${PATH}"
-fi
-
-if [ -d "/usr/local/gcc-arm-embedded-9-2019-q4-major/bin" ]; then
-	PATH="$PATH:/usr/local/gcc-arm-embedded-9-2019-q4-major/bin"
-fi
+add_to_path /opt/puppetlabs/bin
+add_to_path /usr/local/gcc-arm-embedded-9-2019-q4-major/bin
 
 RPS1=''
 function zle-line-init zle-keymap-select {
