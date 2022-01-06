@@ -14,4 +14,11 @@ class profile::ruby {
       BUNDLE_GEM__COC: "true"
       | CONFIG
   }
+
+  file { "${fact('home')}/.gemrc":
+    ensure => file,
+    content => @("CONFIG"),
+      gem: --no-document
+      | CONFIG
+  }
 }
