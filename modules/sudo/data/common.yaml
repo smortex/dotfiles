@@ -1,0 +1,3 @@
+---
+sudo::command: /usr/bin/sudo
+sudo::package: sudo

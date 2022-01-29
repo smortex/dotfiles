@@ -38,6 +38,8 @@ class sysconfig::yubikey {
       }
     }
     'freebsd': {
+      include sudo
+
       $lock_script = inline_epp(@(SH))
         #!/bin/sh
 
@@ -46,7 +48,7 @@ class sysconfig::yubikey {
 
           user=$(echo "$env" | awk -F= '$1 == "USER" { print $2 }')
 
-          sudo -u $user env $env <%= $xautolock::command %> -locknow
+          <%= $sudo::command %> -u $user env $env <%= $xautolock::command %> -locknow
         done
         | SH
 
