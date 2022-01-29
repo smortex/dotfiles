@@ -4,7 +4,7 @@ class sysconfig::yubikey {
 
   case fact('os.family') {
     'debian': {
-      $lock_script = @(SH)
+      $lock_script = inline_epp(@(SH))
         #!/bin/sh
 
         for x in /tmp/.X11-unix/*; do
@@ -18,7 +18,7 @@ class sysconfig::yubikey {
           if pgrep -u $user xautolock; then
             XAUTHORITY="$user_home/.Xauthority"
             DISPLAY=":$user_display"
-            sudo -u $user env XAUTHORITY="$XAUTHORITY" DISPLAY="$DISPLAY" xautolock -locknow
+            sudo -u $user env XAUTHORITY="$XAUTHORITY" DISPLAY="$DISPLAY" <%= $xautolock::command %> -locknow
           fi
         done
         | SH
@@ -38,7 +38,7 @@ class sysconfig::yubikey {
       }
     }
     'freebsd': {
-      $lock_script = @(SH)
+      $lock_script = inline_epp(@(SH))
         #!/bin/sh
 
         for pid in $(pgrep xautolock); do
@@ -46,7 +46,7 @@ class sysconfig::yubikey {
 
           user=$(echo "$env" | awk -F= '$1 == "USER" { print $2 }')
 
-          sudo -u $user env $env xautolock -locknow
+          sudo -u $user env $env <%= $xautolock::command %> -locknow
         done
         | SH
 
