@@ -10,3 +10,6 @@ modules:
 - puppetlabs-stdlib
 - puppetlabs/apply_helpers
 - puppetlabs/ruby_task_helper
+modulepath:
+- site-modules
+- modules
