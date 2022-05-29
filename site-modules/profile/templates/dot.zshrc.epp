@@ -146,7 +146,7 @@ zle -N zle-keymap-select
 KEYTIMEOUT=1
 
 <% if fact('pass_path') { -%>
-if [ -d .password-store/.git ]; then
+if [ -O .password-store/.git ]; then
   (
     cd .password-store
     n=$(git rev-list --count HEAD ^origin/master)
