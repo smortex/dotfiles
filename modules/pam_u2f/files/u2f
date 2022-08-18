@@ -1,0 +1,7 @@
+Name: Authenticate users with Universal 2nd Factor
+Default: no
+Priority: 512
+Auth-Type: Primary
+Auth-Interactive-Only: yes
+Auth:
+	required			pam_u2f.so
