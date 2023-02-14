@@ -86,6 +86,12 @@ export MANPAGER=less
 export MANWIDTH=tty
 export GPG_TTY=$(tty)
 
+# https://github.com/rubygems/rubygems/issues/4031
+# https://bugzilla.redhat.com/show_bug.cgi?id=1574594
+if command -v ruby > /dev/null; then
+  export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
+fi
+
 if [ -d /var/run/passenger ]; then
   export PASSENGER_INSTANCE_REGISTRY_DIR=/var/run/passenger
 fi

@@ -4,10 +4,9 @@ class profile::ruby {
   }
 
   file { "${fact('home')}/.bundle/config":
-    ensure => file,
+    ensure  => file,
     content => @("CONFIG"),
       ---
-      BUNDLE_PATH: "${fact('home')}/.bundle/vendor"
       BUNDLE_JOBS: "4"
       BUNDLE_GEM__TEST: "rspec"
       BUNDLE_GEM__MIT: "true"
@@ -16,7 +15,7 @@ class profile::ruby {
   }
 
   file { "${fact('home')}/.gemrc":
-    ensure => file,
+    ensure  => file,
     content => @("CONFIG"),
       gem: --no-document
       | CONFIG
