@@ -109,7 +109,7 @@ zstyle ':completion:*' list-colors "${LS_COLORS}"
 zstyle ':completion:*' format '%F{2}===> %B%d%f%b'
 zstyle ':completion:*' menu select=3
 zstyle ':completion:*' completer _complete _correct
-zstyle ':completion:*:hosts' known-hosts-files $(find /etc/ssh/ -name '*_known_hosts') ~/.ssh/known_hosts
+zstyle ':completion:*:hosts' known-hosts-files /etc/ssh/*_known_hosts ~/.ssh/known_hosts
 
 <% if fact('kernel') == 'linux' { -%>
 alias ls='ls --classify --color --literal'
