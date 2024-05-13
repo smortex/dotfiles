@@ -57,7 +57,14 @@ HISTSIZE=100
 SAVEHIST=100
 HIST_IGNORE_ALL_DUPS=yes
 
-PS1='%1(j.[%j] .)%B%(#.%b%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{black}.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%~%(?.. (%F{default}%?%f%F{red}%)) %#%f%b '
+<% if fact('os.family') == 'Debian' { -%>
+. /usr/lib/git-core/git-sh-prompt
+<% } elsif fact('os.family') == 'FreeBSD' { -%>
+. /usr/local/share/git-core/contrib/completion/git-prompt.sh
+<% } -%>
+
+setopt PROMPT_SUBST
+PS1='%1(j.[%j] .)%B%(#.%b%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{black}%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%40<…<%%~%<<%%(?.. (%F{default}%?%f%F{red}%))$(__git_ps1 " %%F{yellow}(%%15>…>%s%%%>>)%%F{blue}") %#%f%b '
 
 if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM}" ]; then
 	TERM="${TERM}-256color"
@@ -86,12 +93,6 @@ export MANPAGER=less
 
 export MANWIDTH=tty
 export GPG_TTY=$(tty)
-
-# https://github.com/rubygems/rubygems/issues/4031
-# https://bugzilla.redhat.com/show_bug.cgi?id=1574594
-if command -v ruby > /dev/null; then
-  export GEM_HOME="$(ruby -e 'print Gem.user_dir')"
-fi
 
 if [ -d /var/run/passenger ]; then
   export PASSENGER_INSTANCE_REGISTRY_DIR=/var/run/passenger
@@ -124,19 +125,30 @@ alias httpd='ruby -run -e httpd -- --bind-address=localhost'
 alias weather='curl -H "Accept-Language: fr" wttr.in'
 alias hitifm='mplayer "http://n06.radiojar.com/u0yz7p0mb?rj-ttl=5&rj-tok=AAABcTcJUScAQeoFWbyqMcazAA"'
 
-add_to_path()
+has_in_path()
 {
-  if [ -d "$1" ] && ! echo ":$PATH:" | grep -q ":$1:"; then
+  echo ":$PATH:" | grep -q ":$1:"
+}
+
+prepend_to_path()
+{
+  if [ -d "$1" ] && ! has_in_path "$1"; then
     PATH="$1:${PATH}"
   fi
 }
 
-add_to_path "${HOME}/bin"
+add_to_path()
+{
+  if [ -d "$1" ] && ! has_in_path "$1"; then
+    PATH="${PATH}:$1"
+  fi
+}
 
 if [ -d "${HOME}/.gem/ruby" ]; then
   ruby_path=$(\ls -drt "${HOME}/.gem/ruby"/*/bin | tail -n 1)
-  add_to_path "${ruby_path}"
+  prepend_to_path "${ruby_path}"
 fi
+prepend_to_path "${HOME}/bin"
 
 add_to_path /opt/puppetlabs/bin
 add_to_path /usr/local/gcc-arm-embedded-9-2019-q4-major/bin
@@ -167,5 +179,7 @@ fi
 if [ -f "$HOME/.zshrc.local" ]; then
   . "$HOME/.zshrc.local"
 fi
+
+export XDG_RUNTIME_DIR=/var/run/user/`id -u`
 
 :
