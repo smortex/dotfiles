@@ -107,7 +107,6 @@ else
 fi
 
 export BOLT_GEM=1
-export PDK_DISABLE_ANALYTICS=1
 
 zstyle ':completion:*' list-colors "${LS_COLORS}"
 zstyle ':completion:*' format '%F{2}===> %B%d%f%b'
