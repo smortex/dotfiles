@@ -61,6 +61,8 @@ HIST_IGNORE_ALL_DUPS=yes
 . /usr/lib/git-core/git-sh-prompt
 <% } elsif fact('os.family') == 'FreeBSD' { -%>
 . /usr/local/share/git-core/contrib/completion/git-prompt.sh
+<% } elsif fact('os.family') == 'RedHat' { -%>
+. /usr/share/git-core/contrib/completion/git-prompt.sh
 <% } -%>
 
 setopt PROMPT_SUBST
