@@ -66,7 +66,7 @@ HIST_IGNORE_ALL_DUPS=yes
 <% } -%>
 
 setopt PROMPT_SUBST
-PS1='%1(j.[%j] .)%B%(#.%b%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{black}%b.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%40<…<%%~%<<%%(?.. (%F{default}%?%f%F{red}%))$(__git_ps1 " %%F{yellow}(%%15>…>%s%%%>>)%%F{blue}") %#%f%b '
+PS1='%1(j.[%j] .)%B%(#.%b%K{<%= $facts.get('networking.fqdn').skittle_color %>}%F{black}.%F{<%= $facts.get('networking.fqdn').skittle_color %>})%n@%m%f%k%B %(?.%F{blue}.%F{red})%40<…<%%~%<<%%(?.. (%F{default}%?%f%F{red}%))$(__git_ps1 " %%F{yellow}(%%15>…>%s%%%>>)%%F{blue}") %#%f%b '
 
 if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM}" ]; then
 	TERM="${TERM}-256color"
