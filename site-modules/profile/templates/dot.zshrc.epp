@@ -133,21 +133,23 @@ has_in_path()
 
 prepend_to_path()
 {
-  if [ -d "$1" ] && ! has_in_path "$1"; then
+  if [ -n "$1" -a -d "$1" ] && ! has_in_path "$1"; then
     PATH="$1:${PATH}"
   fi
 }
 
 add_to_path()
 {
-  if [ -d "$1" ] && ! has_in_path "$1"; then
+  if [ -n "$1" -a -d "$1" ] && ! has_in_path "$1"; then
     PATH="${PATH}:$1"
   fi
 }
 
 if [ -d "${HOME}/.gem/ruby" ]; then
+  setopt NULL_GLOB
   ruby_path=$(\ls -drt "${HOME}/.gem/ruby"/*/bin | tail -n 1)
   prepend_to_path "${ruby_path}"
+  unsetopt NULL_GLOB
 fi
 prepend_to_path "${HOME}/bin"
 
