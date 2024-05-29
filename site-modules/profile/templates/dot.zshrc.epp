@@ -72,7 +72,7 @@ if [ '(' -n "${XAUTHORITY}" -o -n "${TMUX}" ')' -a "${TERM%-256color}" = "${TERM
 	TERM="${TERM}-256color"
 fi
 case $TERM in
-	screen*|xterm*|rxvt*)
+	rxvt*|screen*|tmux*|xterm*)
 		precmd() { print -Pn "\e]0;%n@%m %~ %%\a" }
 		preexec() { print -Pn "\e]0;%n@%m %~ %% ${~1:gs/\\/\\\\/:gs/%/%%}\a" }
 		;;
